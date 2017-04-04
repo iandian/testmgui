@@ -15,6 +15,18 @@ export const PAGES_MENU = [
         }
       },
       {
+        path: 'products',
+        data: {
+          menu: {
+            title: 'Products',
+            icon: 'ion-android-home',
+            selected: false,
+            expanded: false,
+            order: 10
+          }
+        }
+      },
+      {
         path: 'editors',
         data: {
           menu: {
