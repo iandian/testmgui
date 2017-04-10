@@ -16,6 +16,8 @@ import { TrafficChartService } from './trafficChart/trafficChart.service';
 import { LineChart } from './lineChart';
 import { LineChartService } from './lineChart/lineChart.service';
 
+import { ProductsDetailComponent } from './products-detail.component';
+
 
 @NgModule({
   imports: [
@@ -27,7 +29,8 @@ import { LineChartService } from './lineChart/lineChart.service';
   declarations: [
     Products,
     TrafficChart,
-	LineChart
+	LineChart,
+	ProductsDetailComponent
   ],
   providers: [
     ProductsService,

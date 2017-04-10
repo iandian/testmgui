@@ -1,0 +1,37 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "testmgui"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico",
+        "service-worker.js"
+      ],
+      "index": "index.html",
+      "main": "main.browser.ts",
+      "polyfills": "polyfills.browser.ts",
+      "vender": "vender.browser.ts",
+      "test": "test.ts",
+      "prefix": "app",
+      "styles": [
+        "styles.scss"
+      ],
+      "scripts": []
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  }
+}

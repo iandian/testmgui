@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+
+import { CoreModule } from './core';
+
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
 /*
@@ -46,6 +49,7 @@ export type StoreType = {
     ReactiveFormsModule,
     NgaModule.forRoot(),
     PagesModule,
+	CoreModule,
     routing
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
