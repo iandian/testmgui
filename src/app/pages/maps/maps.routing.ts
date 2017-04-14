@@ -3,7 +3,7 @@ import { Routes, RouterModule }  from '@angular/router';
 import { Maps } from './maps.component';
 import { BubbleMaps } from './components/bubbleMaps/bubbleMaps.component';
 import { GoogleMaps } from './components/googleMaps/googleMaps.component';
-import { LeafletMaps } from './components/leafletMaps/leafletMaps.component';
+//import { LeafletMaps } from './components/leafletMaps/leafletMaps.component';
 import { LineMaps } from './components/lineMaps/lineMaps.component';
 
 // noinspection TypeScriptValidateTypes
