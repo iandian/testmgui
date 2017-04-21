@@ -16,8 +16,8 @@ export const productReducer: ActionReducer<ProductState> =
 
     case ProductActions.GET_ALL_PRODUCTS_SUCCESS:
       const _products: Product[] = payload.products.products;
-      const productIds: number[] = _products.map(product => product.id);
-      const productEntities = _products.reduce((products: { [id: number]: Product }, product: Product) => {
+      const productIds: string[] = _products.map(product => product.id);
+      const productEntities = _products.reduce((products: { [id: string]: Product }, product: Product) => {
         return Object.assign(products, {
           [product.id]: product
         });

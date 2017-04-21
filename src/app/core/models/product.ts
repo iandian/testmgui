@@ -1,4 +1,7 @@
+import { Build } from './build';
+
 export class Product {
-  id: number;
+  id: string;
   name: string;
+  builds: Build[]
 }

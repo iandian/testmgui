@@ -7,6 +7,7 @@ import { ProductDummyService } from './../../core/services/product-dummy.service
 import { Observable } from 'rxjs/Observable';
 import { Product } from './../../core/models/product';
 import { ProductActions } from './../actions/product-actions';
+import {} from 'jasmine';
 
 describe('ProductEffects', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -83,4 +84,3 @@ describe('ProductEffects', () => {
 
   });
 });
-

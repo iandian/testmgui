@@ -1,8 +1,16 @@
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Rx';
 
 import { BaMenuService } from '../theme';
-import { PAGES_MENU } from './pages.menu';
+import { ProductActions } from '../core/actions/product-actions';
+import { AppAllState } from '../interfaces';
+import { getProducts } from '../core/reducers/selectors';
+
+import { Product } from '../core/models/product';
+import { MenuService } from '../core/services/menu.service';
+
 
 @Component({
   selector: 'pages',
@@ -31,11 +39,17 @@ import { PAGES_MENU } from './pages.menu';
     `
 })
 export class Pages {
+  page_menu: Routes;
 
-  constructor(private _menuService: BaMenuService,) {
+  constructor(private _menuService: BaMenuService, private store: Store<AppAllState>, private actions: ProductActions, private menuService: MenuService) {
+    this.store.dispatch(this.actions.getAllProducts());
+    this.store.select(getProducts)
+    .subscribe((products) => {
+      this.page_menu = menuService.generateMenu(products);
+});
   }
 
   ngOnInit() {
-    this._menuService.updateMenuByRoutes(<Routes>PAGES_MENU);
+    this._menuService.updateMenuByRoutes(this.page_menu);
   }
 }

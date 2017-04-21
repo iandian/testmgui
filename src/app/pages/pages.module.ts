@@ -5,10 +5,12 @@ import { routing }       from './pages.routing';
 import { NgaModule } from '../theme/nga.module';
 
 import { Pages } from './pages.component';
+import { MenuService } from '../core/services/menu.service';
 
 @NgModule({
   imports: [CommonModule, NgaModule, routing],
-  declarations: [Pages]
+  declarations: [Pages],
+  providers: [ MenuService ]
 })
 export class PagesModule {
 }
