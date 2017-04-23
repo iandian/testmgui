@@ -1,12 +1,11 @@
 <div class="row">
-  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-                     title="Acquisition Channels" baCardClass="traffic-panel medium-card">
-    <traffic-chart></traffic-chart>
+  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Acquisition Channels" baCardClass="traffic-panel medium-card">
+    <ba-chartist-chart baChartistChartClass="ct-chart" baChartistChartType="Line" [baChartistChartData]="data1['simpleLineData']" [baChartistChartOptions]="data1['simpleLineOptions']">
+    </ba-chartist-chart>
   </ba-card>
 
-  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-           title="Revenue" baCardClass="medium-card">
-    <line-chart></line-chart>
+  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Revenue" baCardClass="medium-card">
+    <ba-chartist-chart baChartistChartClass="ct-chart stacked-bar" baChartistChartType="Pie" [baChartistChartData]="data2['simpleDonutData']" [baChartistChartOptions]="data2['simpleDonutOptions']" [baChartistChartResponsive]="getResponsive(5, 40)">
+    </ba-chartist-chart>
   </ba-card>
 </div>
-

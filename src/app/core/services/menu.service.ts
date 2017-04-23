@@ -9,6 +9,15 @@ export class MenuService {
   }
 
   generateMenu(products: any[]): Routes {
+     return  [
+       {
+         path: 'pages',
+         children: this.generateSubMenu(products)
+       }
+    ]
+  }
+
+  generateSubMenu(products: any): any[] {
     return products.map(product => {
      return  {
         path: `/api/products/${product.id}`,
@@ -21,12 +30,12 @@ export class MenuService {
               order: this.generateOrder()
             }
           },
-          children: this.generateSubMenu(product.builds)
+          children: this.generateSub2Menu(product.builds)
       };
 	});
-  }
+	}
 
-	generateSubMenu(builds: any): any[] {
+	generateSub2Menu(builds: any): any[] {
       return builds.map(build => {
        return  {
           path: `/api/builds/${build.id}`,
