@@ -1,11 +1,10 @@
 import { Routes, RouterModule }  from '@angular/router';
 
-import { Products } from './products.component';
+import { Builds } from './builds.component';
 
 // noinspection TypeScriptValidateTypes
 const routes: Routes = [
-  { path: '', component: Products, pathMatch: 'full' },
-  { path: ':id', component: Products }
+  { path: ':id', component: Builds }
   //{
   //path: '',
   //component: Products,

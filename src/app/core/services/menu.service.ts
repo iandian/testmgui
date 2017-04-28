@@ -20,7 +20,7 @@ export class MenuService {
   generateSubMenu(products: any): any[] {
     return products.map(product => {
      return  {
-        path: `/api/products/${product.id}`,
+        path: `products/${product.id}`,
           data: {
             menu: {
               title: `${product.name}`,
@@ -38,7 +38,7 @@ export class MenuService {
 	generateSub2Menu(builds: any): any[] {
       return builds.map(build => {
        return  {
-          path: `/api/builds/${build.id}`,
+          path: `builds/${build.id}`,
           data: {
           menu: {
             title: `${build.version}`,

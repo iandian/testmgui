@@ -87,6 +87,43 @@ export class ProductDummyService {
     return Observable.of(data);
   }
 
+  getBuild(id: string): any {
+    const data = {
+      'build': {
+        'id': 1,
+        'version': '1.1.1.1',
+        'run_records': [
+          {
+            'id': 2,
+            'time': '2017-07-07',
+            'pass_rate': 0.97
+          },
+          {
+            'id': 3,
+            'time': '2017-07-07',
+            'pass_rate': 0.97
+          },
+          {
+            'id': 4,
+            'time': '2017-07-07',
+            'pass_rate': 0.97
+          },
+          {
+            'id': 5,
+            'time': '2017-07-07',
+            'pass_rate': 0.97
+          },
+          {
+            'id': 6,
+            'time': '2017-07-07',
+            'pass_rate': 0.97
+          }
+        ]
+      }
+    };
+    return Observable.of(data);
+  }
+
   getProducts(): any {
     console.log('in dummy service.');
 

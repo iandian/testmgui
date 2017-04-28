@@ -1,6 +1,9 @@
 export class Build {
   id: string;
   version: string;
-  run_count: number;
-  pass_rate: number;
+  run_records: {
+    id: string;
+    time: string;
+	pass_rate: number;
+	}[]
 }

@@ -1,5 +1,7 @@
 import { productReducer } from './product-reducer';
 import { ProductState } from './product-state';
+import { buildReducer } from './build-reducer';
+import { BuildState } from './build-state';
 
 
 /**
@@ -32,7 +34,8 @@ import { compose } from '@ngrx/core/compose';
 import { storeFreeze } from 'ngrx-store-freeze';
 
 const reducers = {
-  products: productReducer
+  products: productReducer,
+  builds: buildReducer
 };
 
 export const developmentReducer: ActionReducer<AppAllState> = compose(storeFreeze, combineReducers)(reducers);;
@@ -45,4 +48,3 @@ export function reducer(state: any, action: any) {
     return developmentReducer(state, action);
   // }
 }
-

@@ -1,4 +1,5 @@
 import { ProductState } from './core/reducers/product-state';
+import { BuildState } from './core/reducers/build-state';
 
 
 // This should hold the AppAllState interface
@@ -6,4 +7,5 @@ import { ProductState } from './core/reducers/product-state';
 
 export interface AppAllState {
   products: ProductState;
+  builds: BuildState;
 }

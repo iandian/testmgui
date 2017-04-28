@@ -1,0 +1,20 @@
+<div class="vertical-scroll">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th class="table-id">#</th>
+      <th>Run Time</th>
+      <th>Pass Rate</th>
+      <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of smartTableData; let i = index">
+      <td class="table-id">{{ i + 1 }}</td>
+      <td>{{ item.time }}</td>
+      <td>{{ item.pass_rate }}</td>
+      <td><a href="">Details</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
