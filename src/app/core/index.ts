@@ -13,8 +13,12 @@ import { ProductDummyService } from './services/product-dummy.service';
 
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './effects/product.effects';
+import { BuildEffects } from './effects/build.effects';
+import { ReportEffects } from './effects/report.effects';
 
 import { ProductActions } from './actions/product-actions';
+import { BuildActions } from './actions/build-actions';
+import { ReportActions } from './actions/report-actions';
 
 
 export function httpInterceptor(
@@ -38,17 +42,21 @@ export function httpInterceptor(
     // Were not working on modules sice update to rc-5
     // TO BE moved to respective modules.
     EffectsModule.run(ProductEffects),
-	StoreModule.provideStore(reducer)
+    EffectsModule.run(BuildEffects),
+    EffectsModule.run(ReportEffects),
+    StoreModule.provideStore(reducer)
   ],
   providers: [
     {
       provide: HttpService,
       useFactory: httpInterceptor,
-      deps: [ XHRBackend, RequestOptions]
+      deps: [XHRBackend, RequestOptions]
     },
     ProductDummyService,
     ProductService,
-	ProductActions
+    ProductActions,
+    BuildActions,
+    ReportActions
   ]
 })
-export class CoreModule {}
+export class CoreModule { }

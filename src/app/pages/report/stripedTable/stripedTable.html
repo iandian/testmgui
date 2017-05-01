@@ -1,0 +1,18 @@
+<div class="vertical-scroll">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th class="table-id">#</th>
+      <th>Name</th>
+      <th>Result</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of smartTableData.test_cases; let i = index">
+      <td class="table-id">{{ i + 1 }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.result }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

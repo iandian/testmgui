@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Build } from '../../../core/models/build';
+import { Report } from '../../../core/models/report';
 
 @Component({
   selector: 'striped-table',
@@ -7,6 +7,6 @@ import { Build } from '../../../core/models/build';
 })
 export class StripedTable {
 
-  @Input() smartTableData: Build;
+  @Input() smartTableData: Report;
 
 }

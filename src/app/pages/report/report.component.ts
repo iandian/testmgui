@@ -7,30 +7,30 @@ import { ActivatedRoute } from '@angular/router';
 
 import '@ngrx/core/add/operator/select';
 
-import { BuildActions } from '../../core/actions/build-actions';
+import { ReportActions } from '../../core/actions/report-actions';
 import { AppAllState } from '../../interfaces';
-import { getSelectedBuild } from '../../core/reducers/selectors';
-import { Build } from '../../core/models/build';
+import { getSelectedReport } from '../../core/reducers/selectors';
+import { Report } from '../../core/models/report';
 
 import { ProductDummyService } from '../../core/services/product-dummy.service';
 
 
 @Component({
-  selector: 'builds',
-  styleUrls: ['./builds.scss'],
-  templateUrl: './builds.html'
+  selector: 'report',
+  styleUrls: ['./report.scss'],
+  templateUrl: './report.html'
 })
-export class Builds implements OnInit {
-  build$: Observable<Build>;
+export class ReportComponent implements OnInit {
+  report$: Observable<Report>;
 
   actionsSubscription: Subscription;
 
-  constructor(private store: Store<AppAllState>, private route: ActivatedRoute, private actions: BuildActions) {
+  constructor(private store: Store<AppAllState>, private route: ActivatedRoute, private actions: ReportActions) {
     this.actionsSubscription = route.params
       .select<string>('id')
       .subscribe(id => {
-        this.store.dispatch(this.actions.getBuildDetail(id));
-        this.build$ = this.store.select(getSelectedBuild);
+        this.store.dispatch(this.actions.getReportDetail(id));
+        this.report$ = this.store.select(getSelectedReport);
       });
   }
 

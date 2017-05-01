@@ -1,6 +1,8 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
+import { Build } from '../models/build';
+import { Report } from '../models/report';
 import {BaThemeConfigProvider} from '../../theme';
 
 @Injectable()
@@ -20,7 +22,7 @@ export class ProductDummyService {
       simpleLineData: {
         labels: product.builds.map(build => build.version),
         series: [
-        //  product.builds.map(build => build.run_count),
+          //  product.builds.map(build => build.run_count),
           product.builds.map(build => build.pass_rate)
         ]
       }
@@ -34,7 +36,7 @@ export class ProductDummyService {
         chartPadding: padding,
         labelOffset: offset,
         labelDirection: 'explode',
-        labelInterpolationFnc: function (value) {
+        labelInterpolationFnc: function(value) {
           return value;
         }
       }],
@@ -42,14 +44,14 @@ export class ProductDummyService {
         chartPadding: padding,
         labelOffset: offset,
         labelDirection: 'explode',
-        labelInterpolationFnc: function (value) {
+        labelInterpolationFnc: function(value) {
           return value;
         }
       }],
       ['screen and (max-width: 600px)', {
         chartPadding: 0,
         labelOffset: 0,
-        labelInterpolationFnc: function (value) {
+        labelInterpolationFnc: function(value) {
           return value[0];
         }
       }]
@@ -88,41 +90,103 @@ export class ProductDummyService {
   }
 
   getBuild(id: string): any {
-    const data = {
-      'build': {
-        'id': 1,
-        'version': '1.1.1.1',
-        'run_records': [
-          {
-            'id': 2,
-            'time': '2017-07-07',
-            'pass_rate': 0.97
-          },
-          {
-            'id': 3,
-            'time': '2017-07-07',
-            'pass_rate': 0.97
-          },
-          {
-            'id': 4,
-            'time': '2017-07-07',
-            'pass_rate': 0.97
-          },
-          {
-            'id': 5,
-            'time': '2017-07-07',
-            'pass_rate': 0.97
-          },
-          {
-            'id': 6,
-            'time': '2017-07-07',
-            'pass_rate': 0.97
-          }
-        ]
-      }
+    const data: Build = {
+      'id': '1',
+      'version': '1.1.1.1',
+      'run_records': [
+        {
+          'id': '2',
+          'time': '2017-07-07',
+          'pass_rate': 0.97
+        },
+        {
+          'id': '3',
+          'time': '2017-07-07',
+          'pass_rate': 0.97
+        },
+        {
+          'id': '4',
+          'time': '2017-07-07',
+          'pass_rate': 0.97
+        },
+        {
+          'id': '5',
+          'time': '2017-07-07',
+          'pass_rate': 0.97
+        },
+        {
+          'id': '6',
+          'time': '2017-07-07',
+          'pass_rate': 0.97
+        }
+      ]
     };
     return Observable.of(data);
   }
+
+    getReport(id: string): any {
+      const data: Report = {
+        'id': '1',
+        'name': 'report1',
+        'total': 10,
+        'passed': 9,
+        'pass_rate': 0.9,
+        'test_cases': [
+          {
+            'id': '1',
+            'name': 'test_case1',
+            'result': 'passed'
+          },
+          {
+            'id': '2',
+            'name': 'test_case2',
+            'result': 'passed'
+          },
+          {
+            'id': '3',
+            'name': 'test_case3',
+            'result': 'passed'
+          },
+          {
+            'id': '4',
+            'name': 'test_case4',
+            'result': 'passed'
+          },
+          {
+            'id': '5',
+            'name': 'test_case5',
+            'result': 'passed'
+          },
+          {
+            'id': '6',
+            'name': 'test_case6',
+            'result': 'passed'
+          },
+          {
+            'id': '7',
+            'name': 'test_case7',
+            'result': 'passed'
+          },
+          {
+            'id': '8',
+            'name': 'test_case8',
+            'result': 'passed'
+          },
+          {
+            'id': '9',
+            'name': 'test_case9',
+            'result': 'passed'
+          },
+          {
+            'id': '10',
+            'name': 'test_case10',
+            'result': 'failed'
+          },
+        ]
+      };
+      return Observable.of(data);
+    }
+
 
   getProducts(): any {
     console.log('in dummy service.');

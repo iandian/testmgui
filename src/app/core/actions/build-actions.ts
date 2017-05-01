@@ -14,10 +14,10 @@ export class BuildActions {
         };
     }
 
-    getBuildDetailSuccess(product: Build): Action {
+    getBuildDetailSuccess(build: Build): Action {
         return {
             type: BuildActions.GET_BUILD_DETAIL_SUCCESS,
-            payload: product
+            payload: build
         };
     }
 

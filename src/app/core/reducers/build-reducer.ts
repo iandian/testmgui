@@ -15,9 +15,9 @@ export const buildReducer: ActionReducer<BuildState> =
         //  selectedBuild: state.buildEntities.get(payload.id)
        // }) as BuildState;
       //}
-      return state.merge({
-        selectedBuild: payload
-      }) as BuildState;
+      return state.update(
+        'selectedBuild', value => payload
+      ) as BuildState;
 
     default:
       return state;
