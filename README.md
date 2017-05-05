@@ -62,3 +62,30 @@ https://github.com/auth0-blog/angular2-tour-of-heroes.git
 https://github.com/awslabs/aws-serverless-auth-reference-app.git
 https://github.com/google/google-api-nodejs-client.git
 https://github.com/hirezio/the-princess-guards.git
+
+
+http://stackoverflow.com/questions/35622588/how-to-reset-the-state-of-a-redux-store
+you can rename it to appReducer and write a new rootReducer delegating to it:
+
+const appReducer = combineReducers({
+  /* your app’s top-level reducers */
+})
+
+const rootReducer = (state, action) => {
+  return appReducer(state, action)
+}
+Now we just need to teach the new rootReducer to return the initial state after USER_LOGOUT action. As we know, reducers are supposed to return the initial state when they are called with undefined as the first argument, no matter the action. Let’s use this fact to conditionally strip the accumulated state as we pass it to appReducer:
+
+ const rootReducer = (state, action) => {
+  if (action.type === 'USER_LOGOUT') {
+    state = undefined
+  }
+
+  return appReducer(state, action)
+}
+
+
+https://anantasite.wordpress.com/2015/09/28/jwt-integration-with-devise-rails-and-angularjs/
+https://medium.com/@goncalvesjoao/rails-devise-jwt-and-the-forgotten-warden-67cfcf8a0b73
+https://www.sitepoint.com/introduction-to-using-jwt-in-rails/
+https://gorails.com/forum/jwt-authentication-using-devise
