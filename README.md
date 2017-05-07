@@ -52,8 +52,9 @@ http://stackoverflow.com/questions/35375530/how-do-i-add-a-json-web-token-to-eac
 https://jwt.io/introduction/
 
 https://github.com/auth0/angular2-jwt.git
-https://github.com/auth0-blog/angular-2-authentication-tutorial.git
-https://github.com/auth0-blog/angular2-authentication-sample.git
+https://github.com/auth0-blog/angular-2-authentication-tutorial.git   use angular2-jwt
+https://github.com/auth0-blog/angular2-authentication-sample.git    use angular2-jwt
+https://github.com/auth0-blog/angular2-tour-of-heroes.git                use angular2-jwt
 https://github.com/cornflourblue/angular2-jwt-authentication-example.git
 https://github.com/cornflourblue/angular2-registration-login-example-webpack.git
 https://github.com/neroniaky/angular2-token.git
@@ -89,3 +90,19 @@ https://anantasite.wordpress.com/2015/09/28/jwt-integration-with-devise-rails-an
 https://medium.com/@goncalvesjoao/rails-devise-jwt-and-the-forgotten-warden-67cfcf8a0b73
 https://www.sitepoint.com/introduction-to-using-jwt-in-rails/
 https://gorails.com/forum/jwt-authentication-using-devise
+
+https://github.com/cschiewek/devise_ldap_authenticatable     # 配置ldap
+https://github.com/plataformatec/devise/wiki/How-To:-Authenticate-via-LDAP
+https://github.com/nellinux/rails/blob/master/config/ldap.yml
+https://github.com/celulaopen/oAuth-Cit/blob/master/config/initializers/devise.rb
+https://github.com/asynchrony/lnl/blob/master/config/ldap.yml
+https://github.com/jksilliman/UChicagoPolling/blob/master/config/ldap.yml
+
+
+
+https://github.com/mcordell/grape_devise_token_auth
+https://github.com/mcordell/rails_grape_auth/tree/7046df4e0e783a3039c909daff4034de564e8aa8
+https://github.com/lynndylanhurley/devise_token_auth
+https://github.com/lynndylanhurley/devise_token_auth_demo
+https://github.com/plataformatec/devise/wiki/Example-Applications
+https://github.com/gonzalo-bulnes/simple_token_authentication
