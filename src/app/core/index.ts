@@ -15,10 +15,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './effects/product.effects';
 import { BuildEffects } from './effects/build.effects';
 import { ReportEffects } from './effects/report.effects';
+import { AuthenticationEffects } from './effects/auth.effects';
 
 import { ProductActions } from './actions/product-actions';
 import { BuildActions } from './actions/build-actions';
 import { ReportActions } from './actions/report-actions';
+import { AuthActions } from './actions/auth-actions';
 
 
 export function httpInterceptor(
@@ -44,6 +46,7 @@ export function httpInterceptor(
     EffectsModule.run(ProductEffects),
     EffectsModule.run(BuildEffects),
     EffectsModule.run(ReportEffects),
+    EffectsModule.run(AuthenticationEffects),
     StoreModule.provideStore(reducer)
   ],
   providers: [
@@ -56,7 +59,8 @@ export function httpInterceptor(
     ProductService,
     ProductActions,
     BuildActions,
-    ReportActions
+    ReportActions,
+    AuthActions
   ]
 })
 export class CoreModule { }

@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs/Rx';
 import { HttpService } from './http';
 import { Injectable } from '@angular/core';
+import { RequestOptionsArgs } from '@angular/http';
 
 @Injectable()
 export class ProductService {
@@ -12,8 +13,8 @@ export class ProductService {
     .map(res => res.json());
   }
 
-  getProducts(): any {
-    return this.http.get(`/api/products`)
+  getProducts( options?: RequestOptionsArgs ): any {
+    return this.http.get(`/api/products`, options)
     .map(res => res.json());
   }
 }

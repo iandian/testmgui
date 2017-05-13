@@ -5,6 +5,7 @@ import { AppAllState } from './../../interfaces';
 import { ProductState } from './product-state';
 import { BuildState } from './build-state';
 import { ReportState } from './report-state';
+import { AuthState } from './auth-state';
 import { createSelector } from 'reselect';
 import { Map, List, fromJS } from 'immutable';
 
@@ -18,9 +19,14 @@ export function getBuildState(state: AppAllState): BuildState {
   return state.builds;
 }
 
-// Base build state selector function
+// Base report state selector function
 export function getReportState(state: AppAllState): ReportState {
   return state.reports;
+}
+
+// Base auth state function
+function getAuthState(state: AppAllState): AuthState {
+    return state.auth;
 }
 
 // ******************** Individual selectors ***************************
@@ -54,6 +60,10 @@ const fetchSelectedReport = function (state: ReportState): Report {
   return state.selectedReport;
 };
 
+const fetchAuthStatus = function(state: AuthState): boolean {
+    return state.isAuthenticated;
+}
+
 // *************************** PUBLIC API's ****************************
 export const getSelectedProduct = createSelector(getProductState, fetchSelectedProduct);
 export const getProducts = createSelector(getProductState, fetchProducts);
@@ -63,3 +73,5 @@ export const getBuilds = createSelector(getBuildState, fetchBuilds);
 
 export const getSelectedReport = createSelector(getReportState, fetchSelectedReport);
 export const getReports = createSelector(getReportState, fetchReports);
+
+export const getAuthStatus = createSelector(getAuthState, fetchAuthStatus);
