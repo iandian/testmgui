@@ -1,59 +1,39 @@
-<div class="row login-container" data-hook="">
-  <div id="content" class="col-sm-12" data-hook="">
-    <div class="col-md-5 col-centered">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Login to {{title}}</h3>
-        </div>
-        <div id="existing-customer" class="panel-body" data-hook="login">
-          <div class="login-third-party-login">
-            <p class="login-button-info-text login-info-text">EASILY USING</p>
-            <div class="login-button-container">
-              <button class="login-facebook login-button coming-soon">
-                <span class="header-sprite login-fb-logo"></span>
-                FACEBOOK
-              </button>
-              <button class="login-google login-button coming-soon" id="gPlusLogin">
-                <span class="header-sprite login-gplus-logo"></span>
-                GOOGLE
-              </button>
-            </div>
-          </div>
-          <p class="login-info-text">- OR USING EMAIL -</p>
-          <form class="login-login-form" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-            <fieldset class="login-input-container">
-              <div class="login-input-item">
-                <input type="email" class="login-user-input-email login-user-input" name="email" placeholder="Your Email Address" formControlName="email"
-                  autocomplete="off">
-                <div *ngIf="signInForm.get('email').errors && signInForm.get('email').touched">
-                  <span class="login-error-icon text-danger">!</span>
-                  <p class="login-error-message text-danger">{{signInForm.get('email').errors.msg || 'Please enter a valid email id'}}</p>
-                </div>
-              </div>
-              <div class="login-input-item">
-                <input type="password" class="login-user-input-password login-user-input" name="password" placeholder="Enter Password" formControlName="password"
-                  autocomplete="off">
-                <div *ngIf="signInForm.get('password').errors && signInForm.get('password').touched">
-                  <span class="login-error-icon text-danger">!</span>
-                  <p class="login-error-message text-danger">{{signInForm.get('password').errors.msg || 'Password must be at least 6 characters'}}</p>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="login-login-button-container">
-              <button type="submit" class="btn btn-danger login-login-button">Log in</button>
-            </fieldset>
-          </form>
-          <div class="login-link-container">
-            <small>
-              <a class="login-link text-danger" routerLink="/">Recover password</a>
-              <div class="login-right-links">
-                <span class="text-default">New to {{title}}?</span>
-                <a class="login-create-account-link login-link text-danger" [routerLink]="['/auth']">Create Account</a>
-              </div>
-            </small>
+<div class="auth-main">
+  <div class="auth-block">
+    <h1>Sign in to testmg UI</h1>
+
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit(signInForm.value)" class="form-horizontal">
+      <div class="form-group row" [ngClass]="{'has-error': (!nickname.valid && nickname.touched), 'has-success': (nickname.valid && nickname.touched)}">
+        <label for="inputName3" class="col-sm-2 control-label">Name</label>
+
+        <div class="col-sm-10">
+          <input [formControl]="nickname" type="text" class="form-control" id="inputName3" placeholder="Name">
+          <div *ngIf="signInForm.get('nickname').errors && signInForm.get('nickname').touched">
+            <span class="login-error-icon text-danger">!</span>
+            <p class="login-error-message text-danger">{{signInForm.get('nickname').errors.msg || 'Please enter a valid user nickname'}}</p>
           </div>
         </div>
       </div>
+      <div class="form-group row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
+        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+
+        <div class="col-sm-10">
+          <input [formControl]="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
+          <div *ngIf="signInForm.get('password').errors && signInForm.get('password').touched">
+            <span class="login-error-icon text-danger">!</span>
+            <p class="login-error-message text-danger">{{signInForm.get('password').errors.msg || 'Password not correct'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+          <button [disabled]="!signInForm.valid" type="submit" class="btn btn-default btn-auth">Sign in</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="auth-sep"><span><span>Sign in with otg account</span></span>
     </div>
+
   </div>
 </div>

@@ -37,6 +37,7 @@ export class HttpService extends Http {
   public loading = new Subject();
   private atOptions: TokenOptions;
   private atCurrentAuthData: AuthData;
+  private atCurrentUserData: UserData;
 
 
   constructor(
@@ -44,6 +45,7 @@ export class HttpService extends Http {
     defaultOptions: RequestOptions,
   ) {
     super(backend, defaultOptions);
+    this.init;
   }
 
   // Inital configuration
@@ -59,7 +61,7 @@ export class HttpService extends Http {
 
           signOutPath:                'auth/sign_out',
           validateTokenPath:          'auth/validate_token',
-          signOutFailedValidate:      false,
+          signOutFailedValidate:      true,
 
           registerAccountPath:        'auth',
           deleteAccountPath:          'auth',
@@ -93,26 +95,14 @@ export class HttpService extends Http {
       this.tryLoadAuthData();
   }
 
-  /**
-   *
-   * Clear Auth Data
-   *
-   */
-  private clearAuth(): void {
-
-    //  let userType = this.getUserTypeByName(localStorage.getItem('userType'));
-
-    //  if (userType)
-    //      this.atCurrentUserType = userType;
-
-      this.getAuthDataFromStorage();
-
-    //  if(this.activatedRoute)
-    //      this.getAuthDataFromParams();
-
-      if (this.atCurrentAuthData)
-          this.validateToken();
+  get currentUserData(): UserData {
+      return this.atCurrentUserData;
   }
+
+  get currentAuthData(): AuthData {
+      return this.atCurrentAuthData;
+  }
+
 
   /**
    *
@@ -139,16 +129,46 @@ export class HttpService extends Http {
 
   // Validate token request
   validateToken(): Observable<Response> {
-    let observ: Observable<Response>
-      // let observ = this.get(this.getUserPath() + this.atOptions.validateTokenPath);
+      let observ = this.get(this.getFullUrl(this.atOptions.validateTokenPath));
 
-      // observ.subscribe(
-      //     res => this.atCurrentUserData = res.json().data,
-      //     error => {
-      //         if (error.status === 401 && this.atOptions.signOutFailedValidate) {
-      //             this.signOut();
-      //         }
-      //     });
+      observ.subscribe(
+          res => this.atCurrentUserData = res.json().data,
+          error => {
+              if (error.status === 401 && this.atOptions.signOutFailedValidate) {
+                  this.signOut();
+              }
+          });
+
+      return observ;
+  }
+
+  // Sign in request and set storage
+  signIn(signInData: SignInData): Observable<Response> {
+
+      let body = JSON.stringify({
+          nickname:      signInData.nickname,
+          password:   signInData.password
+      });
+
+      let observ = this.post(this.getFullUrl(this.atOptions.signInPath), body);
+
+      observ.subscribe(res => this.atCurrentUserData = res.json().data, _error => null);
+
+      return observ;
+  }
+
+  // Sign out request and delete storage
+  signOut(): Observable<Response> {
+      let observ = this.delete(this.getFullUrl(this.atOptions.signOutPath));
+
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('client');
+      localStorage.removeItem('expiry');
+      localStorage.removeItem('tokenType');
+      localStorage.removeItem('uid');
+
+      this.atCurrentAuthData = null;
+      this.atCurrentUserData = null;
 
       return observ;
   }

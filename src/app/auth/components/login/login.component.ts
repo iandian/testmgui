@@ -5,17 +5,16 @@ import { AuthService } from '../../../core/services/auth.service';
 import { Store } from '@ngrx/store';
 import { AppAllState } from '../../../interfaces';
 import { Router, ActivatedRoute } from '@angular/router';
-import { getAuthStatus } from '../../reducers/selectors';
+import { getAuthStatus } from '../../../core/reducers/selectors';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'app-login',
+  selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
   signInForm: FormGroup;
-  title = environment.AppName;
   loginSubs: Subscription;
   returnUrl: string;
 
@@ -64,11 +63,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    const email = '';
+    const nickname = '';
     const password = '';
 
     this.signInForm = this.fb.group({
-      'email': [email, Validators.required],
+      'nickname': [nickname, Validators.required],
       'password': [password, Validators.required]
     });
   }

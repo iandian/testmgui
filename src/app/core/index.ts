@@ -8,6 +8,7 @@ import { reducer } from './reducers/app.reducers';
 
 // Services
 import { HttpService } from './services/http';
+import { AuthService } from './services/auth.service';
 import { ProductService } from './services/product.service';
 import { ProductDummyService } from './services/product-dummy.service';
 
@@ -55,6 +56,7 @@ export function httpInterceptor(
       useFactory: httpInterceptor,
       deps: [XHRBackend, RequestOptions]
     },
+    AuthService,
     ProductDummyService,
     ProductService,
     ProductActions,
