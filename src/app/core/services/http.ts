@@ -45,62 +45,63 @@ export class HttpService extends Http {
     defaultOptions: RequestOptions,
   ) {
     super(backend, defaultOptions);
-    this.init;
+    this.init();
   }
 
   // Inital configuration
   init(options?: TokenOptions) {
 
-      let defaultOptions: TokenOptions = {
-          apiPath:                    null,
-          apiBase:                    null,
+    let defaultOptions: TokenOptions = {
+      apiPath: null,
+      apiBase: null,
 
-          signInPath:                 'auth/sign_in',
-          signInRedirect:             null,
-          signInStoredUrlStorageKey:  null,
+      signInPath: 'auth/sign_in',
+      signInRedirect: null,
+      signInStoredUrlStorageKey: null,
 
-          signOutPath:                'auth/sign_out',
-          validateTokenPath:          'auth/validate_token',
-          signOutFailedValidate:      true,
+      signOutPath: 'auth/sign_out',
+      validateTokenPath: 'auth/validate_token',
+      signOutFailedValidate: true,
 
-          registerAccountPath:        'auth',
-          deleteAccountPath:          'auth',
-          registerAccountCallback:    window.location.href,
+      registerAccountPath: 'auth',
+      deleteAccountPath: 'auth',
+      registerAccountCallback: window.location.href,
 
-          updatePasswordPath:         'auth',
+      updatePasswordPath: 'auth',
 
-          resetPasswordPath:          'auth/password',
-          resetPasswordCallback:      window.location.href,
+      resetPasswordPath: 'auth/password',
+      resetPasswordCallback: window.location.href,
 
-          userTypes:                  null,
+      userTypes: null,
 
-          oAuthBase:                  window.location.origin,
-          oAuthPaths: {
-              github:                 'auth/github'
-          },
-          oAuthCallbackPath:          'oauth_callback',
-          oAuthWindowType:            'newWindow',
-          oAuthWindowOptions:         null,
+      oAuthBase: window.location.origin,
+      oAuthPaths: {
+        github: 'auth/github'
+      },
+      oAuthCallbackPath: 'oauth_callback',
+      oAuthWindowType: 'newWindow',
+      oAuthWindowOptions: null,
 
-          globalOptions: {
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Accept':       'application/json'
-              }
-          }
-      };
+      globalOptions: {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      }
+    };
 
-      this.atOptions = (<any>Object).assign(defaultOptions, options);
+    this.atOptions = (<any>Object).assign(defaultOptions, options);
 
-      this.tryLoadAuthData();
+    this.tryLoadAuthData();
   }
 
   get currentUserData(): UserData {
-      return this.atCurrentUserData;
+    return this.atCurrentUserData;
   }
 
   get currentAuthData(): AuthData {
-      return this.atCurrentAuthData;
+    return this.atCurrentAuthData;
   }
 
 
@@ -118,85 +119,77 @@ export class HttpService extends Http {
     //  if (userType)
     //      this.atCurrentUserType = userType;
 
-      this.getAuthDataFromStorage();
+    this.getAuthDataFromStorage();
 
     //  if(this.activatedRoute)
     //      this.getAuthDataFromParams();
 
-      if (this.atCurrentAuthData)
-          this.validateToken();
+    if (this.atCurrentAuthData)
+      this.validateToken();
   }
 
   // Validate token request
   validateToken(): Observable<Response> {
-      let observ = this.get(this.getFullUrl(this.atOptions.validateTokenPath));
+    let observ = this.get(this.atOptions.validateTokenPath);
 
-      observ.subscribe(
-          res => this.atCurrentUserData = res.json().data,
-          error => {
-              if (error.status === 401 && this.atOptions.signOutFailedValidate) {
-                  this.signOut();
-              }
-          });
+    observ.subscribe(
+      res => this.atCurrentUserData = res.json().data,
+      error => {
+        if (error.status === 401 && this.atOptions.signOutFailedValidate) {
+          this.signOut();
+        }
+      });
 
-      return observ;
+    return observ;
   }
 
   // Sign in request and set storage
   signIn(signInData: SignInData): Observable<Response> {
 
-      let body = JSON.stringify({
-          nickname:      signInData.nickname,
-          password:   signInData.password
-      });
+    let body = JSON.stringify({
+      nickname: signInData.nickname,
+      password: signInData.password
+    });
 
-      let observ = this.post(this.getFullUrl(this.atOptions.signInPath), body);
+    let observ = this.post(this.atOptions.signInPath, body);
 
-      observ.subscribe(res => this.atCurrentUserData = res.json().data, _error => null);
+    observ.subscribe(res => this.atCurrentUserData = res.json().data, _error => null);
 
-      return observ;
+    return observ;
   }
 
   // Sign out request and delete storage
   signOut(): Observable<Response> {
-      let observ = this.delete(this.getFullUrl(this.atOptions.signOutPath));
+    let observ = this.delete(this.atOptions.signOutPath);
 
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('client');
-      localStorage.removeItem('expiry');
-      localStorage.removeItem('tokenType');
-      localStorage.removeItem('uid');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('client');
+    localStorage.removeItem('expiry');
+    localStorage.removeItem('tokenType');
+    localStorage.removeItem('uid');
 
-      this.atCurrentAuthData = null;
-      this.atCurrentUserData = null;
+    this.atCurrentAuthData = null;
+    this.atCurrentUserData = null;
 
-      return observ;
+    return observ;
   }
 
   // Try to get auth data from storage.
   private getAuthDataFromStorage(): void {
 
-      let authData: AuthData = {
-          accessToken:    localStorage.getItem('accessToken'),
-          client:         localStorage.getItem('client'),
-          expiry:         localStorage.getItem('expiry'),
-          tokenType:      localStorage.getItem('tokenType'),
-          uid:            localStorage.getItem('uid')
-      };
+    let authData: AuthData = {
+      accessToken: localStorage.getItem('accessToken'),
+      client: localStorage.getItem('client'),
+      expiry: localStorage.getItem('expiry'),
+      tokenType: localStorage.getItem('tokenType'),
+      uid: localStorage.getItem('uid')
+    };
 
-      if (this.checkAuthData(authData))
-          this.atCurrentAuthData = authData;
+    if (this.checkAuthData(authData))
+      this.atCurrentAuthData = authData;
   }
 
-  /**
-   * Performs any type of http request.
-   * @param url
-   * @param options
-   * @returns {Observable<Response>}
-   */
-  request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-    return super.request(url, options);
-  }
+  // HTTP Wrappers
 
   /**
    * Performs a request with `get` http method.
@@ -204,9 +197,12 @@ export class HttpService extends Http {
    * @param options
    * @returns {Observable<>}
    */
-  get(url: string, options?: RequestOptionsArgs): Observable<any> {
+  get(url: string, options?: RequestOptionsArgs): Observable<Response> {
     this.requestInterceptor();
-    return super.get(this.getFullUrl(url), this.requestOptions(options))
+    return this.request(this.getFullUrl(url), this.mergeRequestOptionsArgs({
+      url: this.getFullUrl(url),
+      method: RequestMethod.Get
+    }, options))
       .catch(this.onCatch.bind(this))
       .do((res: Response) => {
         this.onSubscribeSuccess(res);
@@ -215,12 +211,9 @@ export class HttpService extends Http {
       })
       .finally(() => {
         this.onFinally();
-      });
+      });;
   }
 
-  getLocal(url: string, options?: RequestOptionsArgs): Observable<any> {
-    return super.get(url, options);
-  }
 
   /**
    * Performs a request with `post` http method.
@@ -229,9 +222,13 @@ export class HttpService extends Http {
    * @param options
    * @returns {Observable<>}
    */
-  post(url: string, body: any, options?: RequestOptionsArgs): Observable<any> {
+  post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     this.requestInterceptor();
-    return super.post(this.getFullUrl(url), body, this.requestOptions(options))
+    return this.request(this.getFullUrl(url), this.mergeRequestOptionsArgs({
+      url: this.getFullUrl(url),
+      method: RequestMethod.Post,
+      body: body
+    }, options))
       .catch(this.onCatch.bind(this))
       .do((res: Response) => {
         this.onSubscribeSuccess(res);
@@ -250,9 +247,13 @@ export class HttpService extends Http {
    * @param options
    * @returns {Observable<>}
    */
-  put(url: string, body: any, options?: RequestOptionsArgs): Observable<any> {
+  put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     this.requestInterceptor();
-    return super.put(this.getFullUrl(url), body, this.requestOptions(options))
+    return this.request(this.getFullUrl(url), this.mergeRequestOptionsArgs({
+      url: this.getFullUrl(url),
+      method: RequestMethod.Put,
+      body: body
+    }, options))
       .catch(this.onCatch.bind(this))
       .do((res: Response) => {
         this.onSubscribeSuccess(res);
@@ -270,9 +271,12 @@ export class HttpService extends Http {
    * @param options
    * @returns {Observable<>}
    */
-  delete(url: string, options?: RequestOptionsArgs): Observable<any> {
+  delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
     this.requestInterceptor();
-    return super.delete(this.getFullUrl(url), this.requestOptions(options))
+    return this.request(this.getFullUrl(url), this.mergeRequestOptionsArgs({
+      url: this.getFullUrl(url),
+      method: RequestMethod.Delete
+    }, options))
       .catch(this.onCatch.bind(this))
       .do((res: Response) => {
         this.onSubscribeSuccess(res);
@@ -284,13 +288,83 @@ export class HttpService extends Http {
       });
   }
 
+  /**
+   * Performs a request with `patch` http method.
+   * @param url
+   * @param body
+   * @param options
+   * @returns {Observable<>}
+   */
+  patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+    this.requestInterceptor();
+    return this.request(this.getFullUrl(url), this.mergeRequestOptionsArgs({
+      url: this.getFullUrl(url),
+      method: RequestMethod.Patch,
+      body: body
+    }, options))
+      .catch(this.onCatch.bind(this))
+      .do((res: Response) => {
+        this.onSubscribeSuccess(res);
+      }, (error: any) => {
+        this.onSubscribeError(error);
+      })
+      .finally(() => {
+        this.onFinally();
+      });
+  }
 
   /**
-   * Request options.
+   * Performs a request with `head` http method.
+   * @param path
    * @param options
-   * @returns {RequestOptionsArgs}
+   * @returns {Observable<>}
    */
-  private requestOptions(options?: RequestOptionsArgs): RequestOptionsArgs {
+  head(path: string, options?: RequestOptionsArgs): Observable<Response> {
+    this.requestInterceptor();
+    return this.request(this.getFullUrl(path), {
+      method: RequestMethod.Head,
+      url: this.getFullUrl(path),
+    })
+      .catch(this.onCatch.bind(this))
+      .do((res: Response) => {
+        this.onSubscribeSuccess(res);
+      }, (error: any) => {
+        this.onSubscribeError(error);
+      })
+      .finally(() => {
+        this.onFinally();
+      });
+  }
+
+  /**
+   * Performs a request with `options` http method.
+   * @param url
+   * @param options
+   * @returns {Observable<>}
+   */
+  options(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    this.requestInterceptor();
+    return this.request(this.getFullUrl(url), this.mergeRequestOptionsArgs({
+      url: this.getFullUrl(url),
+      method: RequestMethod.Options
+    }, options))
+      .catch(this.onCatch.bind(this))
+      .do((res: Response) => {
+        this.onSubscribeSuccess(res);
+      }, (error: any) => {
+        this.onSubscribeError(error);
+      })
+      .finally(() => {
+        this.onFinally();
+      });
+  }
+
+  /**
+   * Performs any type of http request.
+   * @param options
+   * @returns {Observable<Response>}
+   */
+  request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
 
     let baseRequestOptions: RequestOptions;
     let baseHeaders: { [key: string]: string; } = this.atOptions.globalOptions.headers;
@@ -312,23 +386,48 @@ export class HttpService extends Http {
 
     // Merge standard and custom RequestOptions
     baseRequestOptions = baseRequestOptions.merge(options);
-    return baseRequestOptions;
 
+    let response = super.request(new Request(baseRequestOptions)).share();
+    this.handleResponse(response);
+
+    return response;
   }
+
+
+  private mergeRequestOptionsArgs(options: RequestOptionsArgs, addOptions?: RequestOptionsArgs): RequestOptionsArgs {
+
+    let returnOptions: RequestOptionsArgs = options;
+
+    if (options)
+      (<any>Object).assign(returnOptions, addOptions);
+
+    return returnOptions;
+  }
+
+  // Check if response is complete and newer, then update storage
+  private handleResponse(response: Observable<Response>): void {
+    response.subscribe(res => {
+      this.getAuthHeadersFromResponse(<any>res);
+    }, error => {
+      this.getAuthHeadersFromResponse(<any>error);
+    });
+  }
+
+
 
   // Parse Auth data from response
   private getAuthHeadersFromResponse(data: any): void {
-      let headers = data.headers;
+    let headers = data.headers;
 
-      let authData: AuthData = {
-          accessToken:    headers.get('access-token'),
-          client:         headers.get('client'),
-          expiry:         headers.get('expiry'),
-          tokenType:      headers.get('token-type'),
-          uid:            headers.get('uid')
-      };
+    let authData: AuthData = {
+      accessToken: headers.get('access-token'),
+      client: headers.get('client'),
+      expiry: headers.get('expiry'),
+      tokenType: headers.get('token-type'),
+      uid: headers.get('uid')
+    };
 
-      this.setAuthData(authData);
+    this.setAuthData(authData);
   }
 
 
@@ -341,20 +440,20 @@ export class HttpService extends Http {
   // Write auth data to storage
   private setAuthData(authData: AuthData): void {
 
-      if (this.checkAuthData(authData)) {
+    if (this.checkAuthData(authData)) {
 
-          this.atCurrentAuthData = authData;
+      this.atCurrentAuthData = authData;
 
-          localStorage.setItem('accessToken', authData.accessToken);
-          localStorage.setItem('client', authData.client);
-          localStorage.setItem('expiry', authData.expiry);
-          localStorage.setItem('tokenType', authData.tokenType);
-          localStorage.setItem('uid', authData.uid);
+      localStorage.setItem('accessToken', authData.accessToken);
+      localStorage.setItem('client', authData.client);
+      localStorage.setItem('expiry', authData.expiry);
+      localStorage.setItem('tokenType', authData.tokenType);
+      localStorage.setItem('uid', authData.uid);
 
-          // if (this.atCurrentUserType != null)
-              // localStorage.setItem('userType', this.atCurrentUserType.name);
+      // if (this.atCurrentUserType != null)
+      // localStorage.setItem('userType', this.atCurrentUserType.name);
 
-      }
+    }
   }
 
   /**
@@ -366,20 +465,20 @@ export class HttpService extends Http {
   // Check if auth data complete and if response token is newer
   private checkAuthData(authData: AuthData): boolean {
 
-      if (
-          authData.accessToken != null &&
-          authData.client != null &&
-          authData.expiry != null &&
-          authData.tokenType != null &&
-          authData.uid != null
-      ) {
-          if (this.atCurrentAuthData != null)
-              return authData.expiry >= this.atCurrentAuthData.expiry;
-          else
-              return true;
-      } else {
-          return false;
-      }
+    if (
+      authData.accessToken != null &&
+      authData.client != null &&
+      authData.expiry != null &&
+      authData.tokenType != null &&
+      authData.uid != null
+    ) {
+      if (this.atCurrentAuthData != null)
+        return authData.expiry >= this.atCurrentAuthData.expiry;
+      else
+        return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -388,7 +487,7 @@ export class HttpService extends Http {
    * @returns {string}
    */
   private getFullUrl(url: string): string {
-    return "http://10.98.26.172:3000" + url;
+    return "http://10.98.26.172:3000/" + url;
   }
 
   /**
@@ -430,7 +529,6 @@ export class HttpService extends Http {
     this.loading.next({
       loading: false, hasError: false, hasMsg: ''
     });
-    this.getAuthHeadersFromResponse(<any>res);
   }
 
   /**
@@ -443,7 +541,6 @@ export class HttpService extends Http {
     this.loading.next({
       loading: false, hasError: true, hasMsg: 'Something went wrong'
     });
-    this.getAuthHeadersFromResponse(<any>error);
   }
 
   /**

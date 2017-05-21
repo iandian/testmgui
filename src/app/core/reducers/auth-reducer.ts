@@ -1,5 +1,5 @@
 import { Action, ActionReducer } from '@ngrx/store';
-import { AuthActions } from '../actions/auth.actions';
+import { AuthActions } from '../actions/auth-actions';
 import { AuthState, AuthStateRecord } from './auth-state';
 
 export const initialState: AuthState = new AuthStateRecord() as AuthState;

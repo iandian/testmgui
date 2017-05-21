@@ -4,6 +4,8 @@ import { buildReducer } from './build-reducer';
 import { BuildState } from './build-state';
 import { reportReducer } from './report-reducer';
 import { ReportState } from './report-state';
+import { authReducer } from './auth-reducer';
+import { AuthState } from './auth-state';
 
 
 /**
@@ -38,7 +40,8 @@ import { storeFreeze } from 'ngrx-store-freeze';
 const reducers = {
   products: productReducer,
   builds: buildReducer,
-  reports: reportReducer
+  reports: reportReducer,
+  auth: authReducer
 };
 
 export const developmentReducer: ActionReducer<AppAllState> = compose(storeFreeze, combineReducers)(reducers);;

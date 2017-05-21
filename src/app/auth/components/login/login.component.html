@@ -3,31 +3,23 @@
     <h1>Sign in to testmg UI</h1>
 
     <form [formGroup]="signInForm" (ngSubmit)="onSubmit(signInForm.value)" class="form-horizontal">
-      <div class="form-group row" [ngClass]="{'has-error': (!nickname.valid && nickname.touched), 'has-success': (nickname.valid && nickname.touched)}">
+      <div class="form-group row" [ngClass]="{'has-error': (!signInForm.get('nickname').errors && signInForm.get('nickname').touched), 'has-success': (signInForm.get('nickname').errors && signInForm.get('nickname').touched)}">
         <label for="inputName3" class="col-sm-2 control-label">Name</label>
 
         <div class="col-sm-10">
-          <input [formControl]="nickname" type="text" class="form-control" id="inputName3" placeholder="Name">
-          <div *ngIf="signInForm.get('nickname').errors && signInForm.get('nickname').touched">
-            <span class="login-error-icon text-danger">!</span>
-            <p class="login-error-message text-danger">{{signInForm.get('nickname').errors.msg || 'Please enter a valid user nickname'}}</p>
-          </div>
+          <input name="nickname" formControlName="nickname" type="text" class="form-control" id="inputName3" placeholder="Name">
         </div>
       </div>
-      <div class="form-group row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
+      <div class="form-group row" [ngClass]="{'has-error': (!signInForm.get('password').errors && signInForm.get('password').touched), 'has-success': (signInForm.get('password').errors && signInForm.get('password').touched)}">
         <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
 
         <div class="col-sm-10">
-          <input [formControl]="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
-          <div *ngIf="signInForm.get('password').errors && signInForm.get('password').touched">
-            <span class="login-error-icon text-danger">!</span>
-            <p class="login-error-message text-danger">{{signInForm.get('password').errors.msg || 'Password not correct'}}</p>
-          </div>
+          <input name="password" formControlName="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
         </div>
       </div>
       <div class="form-group row">
         <div class="offset-sm-2 col-sm-10">
-          <button [disabled]="!signInForm.valid" type="submit" class="btn btn-default btn-auth">Sign in</button>
+          <button type="submit" class="btn btn-default btn-auth">Sign in</button>
         </div>
       </div>
     </form>

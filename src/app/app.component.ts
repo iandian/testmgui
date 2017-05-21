@@ -5,6 +5,13 @@ import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './theme/
 import { BaThemeConfig } from './theme/theme.config';
 import { layoutPaths } from './theme/theme.constants';
 
+import { Store } from '@ngrx/store';
+import { AppAllState } from './interfaces';
+import { getAuthStatus } from './core/reducers/selectors';
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from './core/services/auth.service';
+import { AuthActions } from './core/actions/auth-actions';
+
 import 'style-loader!./app.scss';
 import 'style-loader!./theme/initial.scss';
 
@@ -29,7 +36,10 @@ export class App {
               private _imageLoader: BaImageLoaderService,
               private _spinner: BaThemeSpinner,
               private viewContainerRef: ViewContainerRef,
-              private themeConfig: BaThemeConfig) {
+              private themeConfig: BaThemeConfig,
+              private store: Store<AppAllState>,
+              private authService: AuthService,
+              private authActions: AuthActions) {
 
     themeConfig.config();
 
@@ -38,6 +48,8 @@ export class App {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
+
+    this.store.dispatch(this.authActions.authorize());
   }
 
   public ngAfterViewInit(): void {

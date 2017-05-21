@@ -45,10 +45,8 @@ export class AuthService {
    * @memberof AuthService
    */
   login(data: SignInData): Observable<any> {
-    return this.http.post(
-      'auth/sign_in',
-      { data }
-    ).map((res: Response) => {
+    return this.http.signIn(data)
+    .map((res: Response) => {
       let user_data = res.json();
       if (!user_data.error) {
         this.store.dispatch(this.actions.loginSuccess());
@@ -77,7 +75,7 @@ export class AuthService {
    */
   authorized(): Observable<any> {
     return this.http
-      .get('spree/api/v1/users')
+      .validateToken()
       .map((res: Response) => res.json());
     // catch should be handled here with the http observable
     // so that only the inner obs dies and not the effect Observable
@@ -93,7 +91,7 @@ export class AuthService {
    * @memberof AuthService
    */
   logout() {
-    return this.http.get('auth/sign_out')
+    return this.http.signOut()
       .map((res: Response) => {
         // Setting token after login
         // this.http.clearAuth();
