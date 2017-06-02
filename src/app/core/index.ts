@@ -23,6 +23,8 @@ import { BuildActions } from './actions/build-actions';
 import { ReportActions } from './actions/report-actions';
 import { AuthActions } from './actions/auth-actions';
 
+import { CanActivateViaAuthGuard } from './guards/auth.guard';
+
 
 export function httpInterceptor(
   backend: XHRBackend,
@@ -62,7 +64,8 @@ export function httpInterceptor(
     ProductActions,
     BuildActions,
     ReportActions,
-    AuthActions
+    AuthActions,
+    CanActivateViaAuthGuard
   ]
 })
 export class CoreModule { }
