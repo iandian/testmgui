@@ -9,12 +9,12 @@ export class ProductService {
   constructor(private http: HttpService) { }
 
   getProduct(id: string): Observable<any> {
-    return this.http.get(`/api/dashboard/products/${id}`)
+    return this.http.get(`api/dashboard/products/${id}`)
     .map(res => res.json());
   }
 
   getProducts( options?: RequestOptionsArgs ): any {
-    return this.http.get(`/api/products`, options)
+    return this.http.get(`api/dashboard/products`, options)
     .map(res => res.json());
   }
 }
